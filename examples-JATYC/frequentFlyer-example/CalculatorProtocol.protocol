@@ -1,0 +1,16 @@
+typestate CalculatorProtocol {
+
+  SetFlyerAndReward = {
+    boolean addMiles(String, int): <true:MilesAdded, false:SetFlyerAndReward>
+  }
+
+  MilesAdded = {
+    boolean addMiles(String, int): <true:MilesAdded, false:Terminated>,
+    boolean terminate(String): <true:Terminated, false:MilesAdded>
+  }
+
+  Terminated = {
+
+  }
+
+}

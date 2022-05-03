@@ -1,0 +1,17 @@
+typestate BazaarProtocol {
+
+  PartyProvisioned = {
+    Item listItem(String, int, String): ItemListed
+  }
+
+  ItemListed = {
+    void updateBalance(String, String, int, int): CurrentSaleFinalized,
+    void close() : end
+  }
+
+  CurrentSaleFinalized = {
+    Item listItem(String, int, String): ItemListed,
+    void close() : end
+  }
+
+}

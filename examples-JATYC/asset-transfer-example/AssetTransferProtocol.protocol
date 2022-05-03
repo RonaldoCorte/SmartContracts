@@ -1,0 +1,69 @@
+typestate AssetTransferProtocol {
+
+  Active = {
+    void modify(String,String, int): Active,
+    boolean makeOffer(String, String, String, int): <true:OfferPlaced, false:Active>,
+    boolean terminate(String): <true:Terminated, false: Active>
+  }
+
+  OfferPlaced = {
+    boolean rescindOffer(String): <true:Active, false:OfferPlaced>,
+    boolean acceptOffer(String): <true:PendingInspection, false:OfferPlaced>,
+    void modifyOffer(String, int): OfferPlaced,
+    boolean rejectOffer(String): <true:Active, false: OfferPlaced>,
+    boolean terminate(String): <true:Terminated, false:OfferPlaced>
+  }
+
+  PendingInspection = {
+    boolean rescindOffer(String): <true:Active, false:PendingInspection>,
+    boolean rejectOffer(String): <true:Active, false:PendingInspection>,
+    boolean markInspected(String): <true:Inspected, false:PendingInspection>,
+    boolean markAppraised(String): <true:Appraised, false:PendingInspection>,
+    boolean terminate(String): <true:Terminated, false:PendingInspection>
+  }
+
+  Inspected = {
+    boolean rescindOffer(String): <true:Active, false: Inspected>,
+    boolean rejectOffer(String): <true:Active, false: Inspected>,
+    boolean markAppraised(String): <true:NotionalAcceptance, false:Inspected>,
+    boolean terminate(String): <true:Terminated, false:Inspected>
+  }
+
+  Appraised = {
+    boolean rescindOffer(String): <true:Active, false:Appraised>,
+    boolean rejectOffer(String): <true:Active, false:Appraised>,
+    boolean markInspected(String): <true:NotionalAcceptance, false:Appraised>,
+    boolean terminate(String): <true:Terminated, false: Appraised>
+  }
+
+  NotionalAcceptance = {
+    boolean rescindOffer(String): <true:Active, false:NotionalAcceptance>,
+    boolean rejectOffer(String): <true:Active, false: NotionalAcceptance>,
+    boolean acceptSeller(String): <true:SellerAccepted, false:NotionalAcceptance>,
+    boolean acceptBuyer(String): <true:BuyerAccepted,false:NotionalAcceptance>,
+    boolean terminate(String): <true:Terminated, false:NotionalAcceptance>
+  }
+
+  SellerAccepted = {
+    boolean rescindOffer(String): <true:Active, false:SellerAccepted>,
+    boolean accept(String): <true:Accepted, false:SellerAccepted>
+  }
+
+  BuyerAccepted = {
+    boolean rejectOffer(String): <true:Active, false:BuyerAccepted>,
+    boolean acceptSeller(String): <true:SellerAccepted, false:BuyerAccepted>,
+    boolean terminate(String): <true:Terminated, false:BuyerAccepted>
+  }
+
+  Accepted = {
+
+  }
+
+  Terminated = {
+
+  }
+
+
+
+
+}

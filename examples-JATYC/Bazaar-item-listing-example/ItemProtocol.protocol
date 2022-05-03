@@ -1,0 +1,15 @@
+typestate ItemProtocol {
+
+  ItemAvailable = {
+     boolean buyItem(Bazaar): <true:ItemSold, false: Fail>
+  }
+
+  Fail = {
+
+  }
+
+  ItemSold = {
+
+  }
+
+}

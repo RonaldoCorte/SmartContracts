@@ -1,0 +1,34 @@
+typestate DigitalLockerProtocol {
+
+    Requested = {
+      void terminate(): Terminated,
+      boolean beginReviewProcess(String,String): <true:DocumentReview, false:Requested>
+    }
+
+    DocumentReview = {
+      void terminate(): Terminated,
+      boolean uploadDocuments(String): <true:AvailableToShare, false:DocumentReview>
+    }
+
+    AvailableToShare = {
+      void terminate(): Terminated,
+      void sharingWithThirdParty(String) : SharingWithThirdParty,
+      void requestLockerAccess(String): SharingRequestPending
+    }
+
+    SharingRequestPending = {
+      void terminate(): Terminated,
+      boolean rejectSharingRequest(String): <true:AvailableToShare, false:SharingRequestPending>,
+      boolean acceptSharingRequest(String): <true:SharingWithThirdParty, false: SharingRequestPending>
+    }
+
+    SharingWithThirdParty = {
+      boolean releaseLockerAccess(String): <true:AvailableToShare, false:SharingWithThirdParty>,
+      void terminate(): Terminated
+    }
+
+    Terminated = {
+
+    }
+
+}

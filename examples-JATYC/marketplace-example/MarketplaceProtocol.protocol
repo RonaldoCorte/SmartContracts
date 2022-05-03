@@ -1,0 +1,14 @@
+typestate MarketplaceProtocol {
+    ItemAvailable = {
+        boolean makeOffer(String,int): <false:ItemAvailable, true:OfferPlaced>
+    }
+
+    OfferPlaced = {
+        boolean reject(String): <true:ItemAvailable, false:OfferPlaced>,
+        boolean accept(String): <true:Accept, false:OfferPlaced>
+    }
+
+    Accept = {
+
+    }
+}

@@ -1,0 +1,21 @@
+typestate RefrigeratedTransportationProtocol {
+
+    Created = {
+      boolean ingestTelemetry(String,double,double): <true:InTransit, false:OutOfCompliance>,
+      void transferResponsability(String): InTransit
+    }
+
+    InTransit = {
+      boolean ingestTelemetry(String,double,double): <true:InTransit, false:OutOfCompliance>,
+      void transferResponsability(String): InTransit,
+      void complete(String): Completed
+    }
+
+    OutOfCompliance =  {
+
+    }
+
+    Completed = {
+
+    }
+}
